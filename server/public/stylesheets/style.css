@@ -1,8 +1,14 @@
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding: 0px;
+  margin: 0px;
 }
 
 a {
-  color: #00B7FF;
+  color: #00FC19;
 }
+
+.display-inline { display: inline; }
+
+.wf-mplus1p { font-family: "Mplus 1p"; }
+.wf-hannari { font-family: "Hannari"; }
+.wf-nicomoji { font-family: "Nico Moji"; }
