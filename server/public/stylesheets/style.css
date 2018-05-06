@@ -7,6 +7,19 @@ a {
   color: #00FC19;
 }
 
+footer {
+  position: absolute;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  bottom: 1em;
+}
+
+#carouselExampleIndicators {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
 .display-inline { display: inline; }
 
 .wf-mplus1p { font-family: "Mplus 1p"; }
