@@ -1,26 +1,5 @@
 header
-  div(class="bg-dark collapse", id="navbarHeader")
-    .container
-      .row
-        div(class="col-sm-8 col-md-7 py-4")
-          h4.text-white About
-          p.text-muted words
-        div(class="col-sm-4 offset-md-1 py-4")
-          h4.text-white Contact
-          ul.list-unstyled
-            li
-              a(href="https://twitter.com/huitclub")
-                Follow on Twitter
-                i(id="social-tw", class="fa fa-twitter-square fa-3x social")
-            li
-              a(href="https://github.com/HUITCLUB")
-                Watch what we have done
-                i(id="social-gh", class="fa fa-github-square fa-3x social")
-            li
-              a(href="https://huitgroup.slack.com/")
-                Getting in slack chat
-                i(id="social-sl", class="fa fa-slack fa-3x social")
-  div(class="navbar navbar-expand-md navbar-dark fixed-top bg-dark")
+  nav(class="navbar navbar-default navbar-expand-md navbar-dark fixed-top bg-dark")
     a(class="navbar-brand" href="/") HUIT
     ul(class="navbar-nav mr-auto")
       li(class="nav-item active")
@@ -35,5 +14,4 @@ header
           a(class="dropdown-item", href="/portfolio") Portfolio Main
           div.dropdown-divider
           a(class="dropdown-item", href="/portfolio/yoonken") 尹建
-  button(class="navbar-toggler", type="button", data-toggle="collapse", data-target="#navbarHeader", aria-controls="navbarHeader", aria-expanded="true", aria-label="Toggle navigation")
-    span.navbar-toggler-icon
+      li(class="nav-item")
