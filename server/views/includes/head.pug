@@ -1,17 +1,8 @@
 header
-  nav(class="navbar navbar-expand-md navbar-dark fixed-top bg-dark")
-    a(class="navbar-brand" href="/") HUIT
-    ul(class="navbar-nav mr-auto")
-      li(class="nav-item active")
-        a(class="nav-link", href="/") Home
-      li(class="nav-item")
-        a(class="nav-link" href="https://huitclub.github.io") Github Blog
-      li(class="nav-item")
-        a(class="nav-link" href="/blog") Site Blog
-      li(class="nav-item dropdown")
-        a(class="nav-link dropdown-toggle", href="/portfolio", id="navbarDropdown", role="button", data-toggle="dropdown", aria-haspopup="true", aria-expanded="false") Portfolio
-        div(class="dropdown-menu", aria-labelledby="navbarDropdown")
-          a(class="dropdown-item", href="/portfolio") Portfolio Main
-          div.dropdown-divider
-          a(class="dropdown-item", href="/portfolio/yoonken") 尹建
-      li(class="nav-item")
+  nav(class="site-header fixed-top py-1")
+    div(class="container d-flex flex-column flex-md-row justify-content-between")
+      a(class="py-2", href="/") LOGOSPACE
+      a(class="py-2 d-none d-md-inline-block", href="/") Home
+      a(class="py-2 d-none d-md-inline-block", href="https://huitclub.github.io") Github Blog
+      a(class="py-2 d-none d-md-inline-block", href="/blog") Site Blog
+      a(class="py-2 d-none d-md-inline-block", href="/portfolio") Portfolio

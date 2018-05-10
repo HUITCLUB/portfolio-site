@@ -25,14 +25,30 @@ footer {
   padding-bottom: 3em;
 }
 
+/*
+HEADERS
+ */
+.site-header {
+  background-color: rgba(0, 0, 0, .85);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  backdrop-filter: saturate(180%) blur(20px);
+}
+.site-header a {
+  color: #999;
+  transition: ease-in-out color .15s;
+}
+.site-header a:hover {
+  color: #fff;
+  text-decoration: none;
+}
 .blog-header {
   line-height: 1;
   border-bottom: 1px solid #e5e5e5;
 }
 
-.jumbotron { width: 100%; }
-.display-inline { display: inline; }
-
+/*
+FONTS
+ */
 .wf-mplus1p { font-family: "Mplus 1p"; }
 .wf-hannari { font-family: "Hannari"; }
 .wf-nicomoji { font-family: "Nico Moji"; }
@@ -44,22 +60,41 @@ ANIMATIONS
      -webkit-transform: scale(1.1);
      -moz-transform: scale(1.1);
      -o-transform: scale(1.1);
- }
- .social {
-     -webkit-transform: scale(0.8);
-     /* Browser Variations: */
-     -moz-transform: scale(0.8);
-     -o-transform: scale(0.8);
-     -webkit-transition-duration: 0.5s;
-     -moz-transition-duration: 0.5s;
-     -o-transition-duration: 0.5s;
- }
- #social-tw:hover {
-     color: #4099FF;
- }
- #social-gh:hover {
-     color: #1e1e1e;
- }
- #social-sl:hover {
-     color: #fb19ff;
- }
+}
+.social {
+   -webkit-transform: scale(0.8);
+   /* Browser Variations: */
+   -moz-transform: scale(0.8);
+   -o-transform: scale(0.8);
+   -webkit-transition-duration: 0.5s;
+   -moz-transition-duration: 0.5s;
+   -o-transition-duration: 0.5s;
+}
+#social-tw:hover {
+   color: #4099FF;
+}
+#social-gh:hover {
+   color: #1e1e1e;
+}
+#social-sl:hover {
+   color: #fb19ff;
+}
+
+/*
+UTILS
+  */
+.jumbotron { width: 100%; }
+.border-top { border-top: 1px solid #e5e5e5; }
+.border-bottom { border-bottom: 1px solid #e5e5e5; }
+.box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
+.flex-equal > * {
+  -ms-flex: 1;
+  flex: 1;
+}
+@media (min-width: 768px) {
+  .flex-md-equal > * {
+    -ms-flex: 1;
+    flex: 1;
+  }
+}
+.overflow-hidden { overflow: hidden; }
