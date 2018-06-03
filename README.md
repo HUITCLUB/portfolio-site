@@ -1,4 +1,6 @@
-# portfolio-site
+# Huitclub member's portfolio site
+http://huitclub.com
+
 ![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)
 ![npm](https://img.shields.io/npm/v/npm.svg)
 ![express](https://img.shields.io/github/tag/expressjs/express.svg)
@@ -38,6 +40,7 @@ enter localhost:3000 on your browser in favor, and hola!
 ## to-dos
 - [x] site's template
 - [x] database setting (mongodb)
+- [ ] CI with test codes
 - [ ] contens (like pictures, member's images, bio or something)
 - [ ] blog page
 
