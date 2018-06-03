@@ -1,5 +1,5 @@
 # portfolio-site
-## required skills for contribute
+## required skills to contribute
 - nodejs
 - express
 - anything basic about web (like html, js, css, basic concepts of http https etc)
