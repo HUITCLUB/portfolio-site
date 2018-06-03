@@ -1,11 +1,25 @@
 var express = require('express');
 var router = express.Router();
-const mongodb = require('mongodb');
-const MongoClient = mongodb.MongoClient;
+const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 
-MongoClient.connect('mongodb://127.0.0.1:27017/portfolioes', (err, db) => {
+const url = 'mongodb://127.0.0.1:27017';
+const dbname = 'huitclub';
 
+const findPortfolioes = function(db, cb) {
+  const collection = db.collection('portfolioes');
+  collection.find({}).toArray(function err, ports {
+    assert.equal(null, err);
+    cb(ports);
+  });
+}
+
+MongoClient.connect(url, (err, client) => {
+  assert.equal(null, err);
+
+  const db = client.db(dbName);
+
+  client.close();
 });
 
 
