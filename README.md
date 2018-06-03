@@ -3,7 +3,7 @@ http://huitclub.com
 
 ![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)
 ![npm](https://img.shields.io/npm/v/npm.svg)
-![express](https://img.shields.io/github/tag/expressjs/express.svg)
+
 ![Travis](https://img.shields.io/travis/USER/REPO.svg)
 ## required skills to contribute
 - nodejs
@@ -17,7 +17,7 @@ http://huitclub.com
 - body-parser
 - cookie-parser
 - debug
-- express
+- express ![express](https://img.shields.io/github/tag/expressjs/express.svg)
 - markdown-it
 - mongodb
 - morgan
