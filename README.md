@@ -1,4 +1,8 @@
 # portfolio-site
+![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)
+![npm](https://img.shields.io/npm/v/npm.svg)
+![express](https://img.shields.io/github/tag/expressjs/express.svg)
+![Travis](https://img.shields.io/travis/USER/REPO.svg)
 ## required skills to contribute
 - nodejs
 - express
@@ -19,15 +23,23 @@
 - serve-favicon
 
 ## how to run
-You need to install node, npm on your own system. After you installed it, enter server directory and input
+You need to install node, npm on your own system. After you installed it, enter */server* directory and input
 ```
 npm install
 node bin/www
 ```
-hola!
+or
+```
+npm install
+npm start
+```
+enter localhost:3000 on your browser in favor, and hola!
 
 ## to-dos
 - [x] site's template
 - [x] database setting (mongodb)
-- [] contens (like pictures, member's images, bio or something)
-- [] blog page
+- [ ] contens (like pictures, member's images, bio or something)
+- [ ] blog page
+
+## contributors
+@cfr2ak
