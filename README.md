@@ -2,7 +2,7 @@
 ## required skills to contribute
 - nodejs
 - express
-- anything basic about web (like html, js, css, basic concepts of http https etc)
+- any basic knowledges about web (like html, js, css, basic concepts of http https etc)
 (optional maybe)
 - mongodb (there is no technical reason I picked up nosql for this site on behalf of other awesome RDMS. i just wanted to try it anyway)
 - bootstrap
