@@ -34,15 +34,14 @@ router.get('/', function(req, res, next) {
       client.close();
     });
   });
-
 });
 
-router.get('/yoonken', function(req, res, next) {
+router.get('/:path', function(req, res, next) {
   MongoClient.connect(url, (err, client) => {
     assert.equal(null, err);
     const db = client.db(dbName);
 
-    find(db, {'path': '/yoonken'}, function(data) {
+    find(db, {'path': '/' + req.params.path}, function(data) {
       assert.equal(1, data.length);
       data = data[0];
       delete data._id;
