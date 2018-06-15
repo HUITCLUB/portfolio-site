@@ -40,8 +40,9 @@ enter localhost:3000 on your browser in favor, and hola!
 ## to-dos
 - [x] site's template
 - [x] database setting (mongodb)
+- [x] portfolio template
 - [ ] CI with test codes
-- [ ] contens (like pictures, member's images, bio or something)
+- [ ] contents (like pictures, member's images, bio or something)
 - [ ] blog page
 
 ## contributors
