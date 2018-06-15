@@ -1,4 +1,19 @@
 extends layout
 
 block content
-  div !{data.page}
+  div(class="container wf-mplus1p")
+    .row
+      svg(viewBox="0 0 1980 300")
+        symbol#s-text
+          text(text-anchor="middle", x="50%", y="80%") < !{data.name} >
+        g.g-ants
+          use(xlink:href="#s-text", class="text-copy")
+          use(xlink:href="#s-text", class="text-copy")
+          use(xlink:href="#s-text", class="text-copy")
+          use(xlink:href="#s-text", class="text-copy")
+          use(xlink:href="#s-text", class="text-copy")
+    .fadein
+      .text-center
+        h3(class="alert alert-light", role="alert") !{data.bio}
+      hr
+      div !{data.page}
