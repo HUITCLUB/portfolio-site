@@ -20,6 +20,7 @@ const md = require('markdown-it')();
 /* GET home page. */
 router.get('/', function(req, res, next) {
   MongoClient.connect(url, (err, client) => {
+    // TODO: need to change assert statement into error handling function in general
     assert.equal(null, err);
     const db = client.db(dbName);
 
@@ -42,12 +43,13 @@ router.get('/:path', function(req, res, next) {
     const db = client.db(dbName);
 
     find(db, {'path': '/' + req.params.path}, function(data) {
+      // TODO: need to change assert statement into error handling function in general
       assert.equal(1, data.length);
       data = data[0];
       delete data._id;
       data.page = md.render(data.page);
 
-      res.render('port-page', { title: 'portfolio-ken', data: data});
+      res.render('port-page', { title: 'portfolio' + req.params.path, data: data});
       client.close();
     });
   });
