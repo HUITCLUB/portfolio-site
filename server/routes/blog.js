@@ -3,6 +3,10 @@ var router = express.Router();
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
 
+let kt = require('katex'),
+    tm = require('markdown-it-texmath').use(kt),
+    md = require('markdown-it')().use(tm,{delimiters:'brackets'});
+
 const url = 'mongodb://127.0.0.1:27017';
 const dbName = 'huitclub';
 
@@ -33,6 +37,30 @@ router.get('/', function(req, res, next) {
   });
 
   res.render('blog', { title: 'HUIT-blog' });
+});
+
+router.get('/:category/:date/:title', function(req, res, next) {
+  MongoClient.connect(url, (err, client) => {
+    // TODO: need to change assert statement into error handling function in general
+    assert.equal(null, err);
+
+    const category = req.params.category;
+    const date = req.params.date;
+    const title = req.params.title;
+
+    const db = client.db(dbName);
+
+    find(db, {
+      'date': date,
+      'category': category,
+      'title': title,}, function(data) {
+      data.map(x => delete x._id);
+      data.map(x => delete x.page);
+
+      res.render('blog-page', { title: 'HUIT-portfolio', data: {val: data} });
+      client.close();
+    });
+  });
 });
 
 module.exports = router;
