@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
+var async = require("async");
 
 let kt = require('katex'),
     tm = require('markdown-it-texmath').use(kt),
@@ -14,29 +15,46 @@ const find = function(db, cond, cb) {
   const collection = db.collection('blog');
   collection.find(cond).toArray(function(err, data) {
     assert.equal(null, err);
-    cb(data);
+    cb(null, data);
   });
 };
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  MongoClient.connect(url, (err, client) => {
-    assert.equal(null, err);
-    const db = client.db(dbName);
+  console.log("I'm here!!")
 
-    find(db, {}, function(data) {
+  async.waterfall([
+    function(cb) {
+      console.log("I'm here!!")
+      MongoClient.connect(url, cb);
+    },
+    function(err, client, cb){
+      console.log("I'm here!!")
+      assert.equal(null, err);
+      const db = client.db(dbName);
+      cb(null, db, client);
+    },
+    function(db, client, cb) {
+      find(db, {}, cb);
+      client.close();
+    },
+    function(data, cb) {
+      // remove unneeded fields inside data
       data.map(x => delete x._id);
       data.map(x => delete x.page);
+      
       for (var i = 0; i < data.length; i++) {
-        data[i].path = "/portfolio".concat(data[i].path);
+        data[i].category;
+        data[i].date;
+        data[i].title;
+        data[i].author;
       }
-
-      res.render('portfolio', { title: 'HUIT-portfolio', data: {val: data} });
-      client.close();
-    });
+    }
+  ], function (err, result) {
+    console.log("I'm here!!")
+    res.render('blog', { title: 'HUIT-blog' });
+    // result now equals 'done'
   });
-
-  res.render('blog', { title: 'HUIT-blog' });
 });
 
 router.get('/:category/:date/:title', function(req, res, next) {
