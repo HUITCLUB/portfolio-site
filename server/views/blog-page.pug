@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  .container
+    include includes/blog-header.pug
+  main(role="main", class="container")
+    .row
+      div(class="col-md-8 blog-main")
+        h3(class="pb-3 mb-4 font-italic border-bottom") from category !{data.category}
+        .blog-post
+          h2.blog-post-title !{data.title}
+          p.blog-post-meta
+            | !{data.date}
+            | by
+            a(href="#") !{data.author}
+          p !{data.page}
+      include includes/blog-sidebar.pug

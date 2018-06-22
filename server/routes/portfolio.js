@@ -11,7 +11,7 @@ const find = function(db, cond, cb) {
   const collection = db.collection('portfolio');
   collection.find(cond).toArray(function(err, data) {
     assert.equal(null, err);
-    cb(data);
+    cb(null, data);
   });
 };
 
@@ -22,7 +22,7 @@ router.get('/', function(req, res, next) {
     assert.equal(null, err);
     const db = client.db(dbName);
 
-    find(db, {}, function(data) {
+    find(db, {}, function(err, data) {
       data.map(x => delete x._id);
       data.map(x => delete x.page);
       for (var i = 0; i < data.length; i++) {
@@ -40,7 +40,7 @@ router.get('/:path', function(req, res, next) {
     assert.equal(null, err);
     const db = client.db(dbName);
 
-    find(db, {'path': '/' + req.params.path}, function(data) {
+    find(db, {'path': '/' + req.params.path}, function(err, data) {
       // TODO: need to change assert statement into error handling function in general
       assert.equal(1, data.length);
       data = data[0];
