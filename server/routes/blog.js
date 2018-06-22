@@ -21,40 +21,40 @@ const find = function(db, cond, cb) {
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  console.log("I'm here!!")
-
-  async.waterfall([
+  async.waterfall(
+    [
     function(cb) {
-      console.log("I'm here!!")
-      MongoClient.connect(url, cb);
-    },
-    function(err, client, cb){
-      console.log("I'm here!!")
-      assert.equal(null, err);
-      const db = client.db(dbName);
-      cb(null, db, client);
+      MongoClient.connect(url, (err, client) => {
+        assert.equal(null, err);
+        const db = client.db(dbName);
+        cb(null, db, client);
+      });
     },
     function(db, client, cb) {
-      find(db, {}, cb);
-      client.close();
-    },
-    function(data, cb) {
-      // remove unneeded fields inside data
-      data.map(x => delete x._id);
-      data.map(x => delete x.page);
-      
-      for (var i = 0; i < data.length; i++) {
-        data[i].category;
-        data[i].date;
-        data[i].title;
-        data[i].author;
-      }
-    }
-  ], function (err, result) {
-    console.log("I'm here!!")
-    res.render('blog', { title: 'HUIT-blog' });
-    // result now equals 'done'
-  });
+      find(db, {}, function(data) {
+        // close connection cuz we've done with database
+        client.close();
+        // remove unneeded fields inside data
+        if (data != null)
+        {
+          data.map(x => delete x._id);
+          data.map(x => delete x.page);
+          for (var i = 0; i < data.length; i++) {
+            data[i].category;
+            data[i].date;
+            data[i].title;
+            data[i].author;
+          }
+        }
+        
+        var result = null;
+        cb(null, result);
+      });
+    }],
+    function (err, result) {
+      res.render('blog', { title: 'HUIT-blog' });
+      // result now equals 'done'
+    });
 });
 
 router.get('/:category/:date/:title', function(req, res, next) {
