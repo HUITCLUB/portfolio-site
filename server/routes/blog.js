@@ -35,43 +35,29 @@ router.get('/', function(req, res, next) {
       find(db, {}, function(data) {
         // close connection cuz we've done with database
         client.close();
+        
+        if (data != null)
+        {
+          data.map(x => delete x._id); // remove unneeded fields inside data
 
-        var result;
-        fs.readFile(__dirname + '\\..\\..\\data\\2018-02-27-Seq2Seq.md', 'utf-8', function(err, text) {
-          assert(err, null);
-          console.log(__filename);
-          console.log(__dirname + '\\..\\..\\data\\2018-02-27-Seq2Seq.md');
-          console.log(text);
-          page = md.render(text);
-          var val;
-          val.page = page;
+          var result = [];
+          // cannot use data.forEach cuz I have to check the i th data is last one or not for callback in waterfall
+          for (var i = 0; i < data.length; i++) {
+            fs.readFile(md_path, function(err, data) {
+              if (err) throw err;
+              delete data[i].path; // remove path info for security
+              data[i].page = md.render(data);
 
-          // each data includes category, date, title, author, page
-          result.push(val);
-          cb(null, result);
-        });
-        // if (data != null)
-        // {
-        //   data.map(x => delete x._id); // remove unneeded fields inside data
-
-        //   var result;
-        //   // cannot use data.forEach cuz I have to check the i th data is last one or not for callback in waterfall
-        //   for (var i = 0; i < data.length; i++) {
-        //     fs.readFile(md_path, function(err, data) {
-        //       assert(err, null);
-        //       delete data[i].path; // remove path info for security
-        //       data[i].page = md.render(data);
-
-        //       if(i === data.length - 1) {
-        //         cb(null, result);
-        //       }
-        //       // each data includes category, date, title, author, page
-        //       result.push(data[i]);
-        //     });
-        //   }
-        // } else {
-        //   cb(null, null);
-        // }
+              if(i === data.length - 1) {
+                cb(null, result);
+              }
+              // each data includes category, date, title, author, page
+              result.push(data[i]);
+            });
+          }
+        } else {
+          cb(null, null);
+        }
       });
     }],
     function (err, result) {
