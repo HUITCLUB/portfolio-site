@@ -20,8 +20,7 @@ const find = function(db, cond, cb) {
   });
 };
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
+function drawMainPage(req, res, next, condition) {
   async.waterfall(
     [
     function(cb) {
@@ -32,10 +31,10 @@ router.get('/', function(req, res, next) {
       });
     },
     function(db, client, cb) {
-      find(db, {}, function(data) {
+      find(db, condition, function(data) {
         // close connection cuz we've done with database
         client.close();
-        
+
         if (data != null)
         {
           data.map(x => delete x._id); // remove unneeded fields inside data
@@ -48,11 +47,12 @@ router.get('/', function(req, res, next) {
               delete data[i].path; // remove path info for security
               data[i].page = md.render(data);
 
+              // each data includes category, date, title, author, page
+              result.push(data[i]);
+
               if(i === data.length - 1) {
                 cb(null, result);
               }
-              // each data includes category, date, title, author, page
-              result.push(data[i]);
             });
           }
         } else {
@@ -63,32 +63,55 @@ router.get('/', function(req, res, next) {
     function (err, result) {
       // result is the list of posts
       res.render('blog', { title: 'HUIT-blog', post: {val: result} });
-      // result now equals 'done'
     });
+}
+
+/* GET home page. */
+router.get('/', function(req, res, next) {
+  drawMainPage(req, res, next, {});
 });
 
-// router.get('/:category/:date/:title', function(req, res, next) {
-//   MongoClient.connect(url, (err, client) => {
-//     // TODO: need to change assert statement into error handling function in general
-//     assert.equal(null, err);
-//
-//     const category = req.params.category;
-//     const date = req.params.date;
-//     const title = req.params.title;
-//
-//     const db = client.db(dbName);
-//
-//     find(db, {
-//       'date': date,
-//       'category': category,
-//       'title': title,}, function(data) {
-//       data.map(x => delete x._id);
-//       data.map(x => delete x.page);
-//
-//       res.render('blog-page', { title: 'HUIT-portfolio', data: {val: data} });
-//       client.close();
-//     });
-//   });
-// });
+router.get('/:category', function(req, res, next) {
+  drawMainPage(req, res, next, {'category': category});
+});
+
+router.get('/:category/:date/:subtitle', function(req, res, next) {
+  MongoClient.connect(url, (err, client) => {
+    if (err) throw err;
+
+    const category = req.params.category;
+    const date = req.params.date;
+    const subtitle = req.params.subtitle;
+
+    const db = client.db(dbName);
+
+    find(db, {
+      'date': date,
+      'category': category,
+      'subtitle': subtitle}, function(err, data) {
+      data = data[0];
+      delete data._id;
+
+      if (data == null) {
+        var err = new Error('Not Found');
+        err.status = 404;
+        throw err;
+      }
+
+      fs.readFile(data.path, 'utf-8', function(err, text) {
+        if (err) throw err;
+        delete data.path; // remove path info for security
+
+        // remove meta data
+        tmp = text.split('---');
+        textWithoutMetadata = tmp[2];
+
+        data.page = md.render(textWithoutMetadata);
+        res.render('blog-page', { title: 'HUIT-portfolio', data: data });
+        client.close();
+      });
+    });
+  });
+});
 
 module.exports = router;
