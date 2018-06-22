@@ -107,7 +107,7 @@ router.get('/:category/:date/:subtitle', function(req, res, next) {
         textWithoutMetadata = tmp[2];
 
         data.page = md.render(textWithoutMetadata);
-        res.render('blog-page', { title: 'HUIT-portfolio', data: data });
+        res.render('blog-page', { title: 'HUIT-blog', data: data });
         client.close();
       });
     });
