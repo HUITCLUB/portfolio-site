@@ -7,7 +7,7 @@ const async = require("async");
 
 let kt = require('katex'),
     tm = require('markdown-it-texmath').use(kt),
-    md = require('markdown-it')().use(tm,{delimiters:'brackets'});
+    md = require('markdown-it')().use(tm,{delimiters:'dollars'});
 
 const url = 'mongodb://127.0.0.1:27017';
 const dbName = 'huitclub';

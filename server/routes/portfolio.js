@@ -2,7 +2,9 @@ var express = require('express');
 var router = express.Router();
 const MongoClient = require('mongodb').MongoClient;
 const assert = require('assert');
-const md = require('markdown-it');
+let kt = require('katex'),
+	tm = require('markdown-it-texmath').use(kt),
+	md = require('markdown-it')().use(tm, {delimiters:'dollars'});
 
 const url = 'mongodb://127.0.0.1:27017';
 const dbName = 'huitclub';
