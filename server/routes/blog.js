@@ -71,6 +71,10 @@ router.get('/', function(req, res, next) {
   drawMainPage(req, res, next, {});
 });
 
+router.get('/manage', function(req, res, next) {
+  res.render('blog manage panel');
+});
+
 router.get('/:category', function(req, res, next) {
   drawMainPage(req, res, next, {'category': category});
 });
