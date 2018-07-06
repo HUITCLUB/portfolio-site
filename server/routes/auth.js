@@ -5,6 +5,9 @@ const GitHubStrategy = require('passport-github2').Strategy;
 const passport = require('passport');
 const key = require("../credentials")
 
+router.use(passport.initialize());
+router.use(passport.session());
+
 // Passport session setup.
 //   To support persistent login sessions, Passport needs to be able to
 //   serialize users into and deserialize users out of the session.  Typically,
@@ -23,7 +26,7 @@ passport.deserializeUser(function(obj, done) {
 passport.use(new GitHubStrategy({
     clientID: key.val.clientId,
     clientSecret: key.val.clientSecret,
-    callbackURL: "http://localhost:3000/auth/github/callback"
+    callbackURL: key.val.cburl
   },
   function(accessToken, refreshToken, profile, done) {
     // asynchronous verification, for effect...
@@ -37,7 +40,6 @@ passport.use(new GitHubStrategy({
     });
   }
 ));
-
 
 router.get('/failed', function(req, res, next) {
   res.render('auth failed');
