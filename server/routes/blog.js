@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
-const MongoClient = require('mongodb').MongoClient;
+
+const mongoose = require('mongoose');
+
 const assert = require('assert');
 const fs = require('fs');
 const async = require("async");
@@ -11,6 +13,7 @@ let kt = require('katex'),
 
 const url = 'mongodb://127.0.0.1:27017';
 const dbName = 'huitclub';
+mongoose.connect(url + '/' +dbName);
 
 const find = function(db, cond, cb) {
   const collection = db.collection('blog');
