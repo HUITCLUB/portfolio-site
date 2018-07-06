@@ -31,7 +31,7 @@ router.get('/', function(req, res, next) {
         data[i].path = "/portfolio".concat(data[i].path);
       }
 
-      res.render('portfolio', { title: 'HUIT-portfolio', data: {val: data} });
+      res.render('portfolio', { title: 'HUIT-portfolio', data: {val: data}, style: 'portfolio' });
       client.close();
     });
   });
@@ -49,7 +49,7 @@ router.get('/:path', function(req, res, next) {
       delete data._id;
       data.page = md.render(data.page);
 
-      res.render('port-page', { title: 'portfolio' + req.params.path, data: data});
+      res.render('port-page', { title: 'portfolio' + req.params.path, data: data, style: 'portfolio'});
       client.close();
     });
   });

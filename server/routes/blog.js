@@ -1,6 +1,9 @@
 var express = require('express');
 var router = express.Router();
+
 const MongoClient = require('mongodb').MongoClient;
+const mongoose = require('mongoose');
+
 const assert = require('assert');
 const fs = require('fs');
 const async = require("async");
@@ -11,6 +14,7 @@ let kt = require('katex'),
 
 const url = 'mongodb://127.0.0.1:27017';
 const dbName = 'huitclub';
+mongoose.connect(url + '/' +dbName);
 
 const find = function(db, cond, cb) {
   const collection = db.collection('blog');
@@ -62,7 +66,7 @@ function drawMainPage(req, res, next, condition) {
     }],
     function (err, result) {
       // result is the list of posts
-      res.render('blog', { title: 'HUIT-blog', post: {val: result} });
+      res.render('blog', { title: 'HUIT-blog', post: {val: result}, style: 'blog' });
     });
 }
 
@@ -71,8 +75,19 @@ router.get('/', function(req, res, next) {
   drawMainPage(req, res, next, {});
 });
 
+router.get('/manage', function(req, res, next) {
+  if (req.session.logined) {
+    next();
+  }
+  else {
+    res.redirect('/blog');
+  }
+}, function(req, res, next) {
+  res.render('manage', {style: 'manage'});
+});
+
 router.get('/:category', function(req, res, next) {
-  drawMainPage(req, res, next, {'category': category});
+  drawMainPage(req, res, next, {'category': category, style: 'blog'});
 });
 
 router.get('/:category/:date/:subtitle', function(req, res, next) {
@@ -107,7 +122,7 @@ router.get('/:category/:date/:subtitle', function(req, res, next) {
         textWithoutMetadata = tmp[2];
 
         data.page = md.render(textWithoutMetadata);
-        res.render('blog-page', { title: 'HUIT-blog', data: data });
+        res.render('blog-page', { title: 'HUIT-blog', data: data, style: 'blog' });
         client.close();
       });
     });
