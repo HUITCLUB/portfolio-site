@@ -3,7 +3,6 @@ const router = express.Router();
 
 const GitHubStrategy = require('passport-github2').Strategy;
 const passport = require('passport');
-const key = require("../credentials");
 
 router.use(passport.initialize());
 router.use(passport.session());
