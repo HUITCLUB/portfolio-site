@@ -66,7 +66,7 @@ function drawMainPage(req, res, next, condition) {
     }],
     function (err, result) {
       // result is the list of posts
-      res.render('blog', { title: 'HUIT-blog', post: {val: result} });
+      res.render('blog', { title: 'HUIT-blog', post: {val: result}, style: 'blog' });
     });
 }
 
@@ -76,11 +76,18 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/manage', function(req, res, next) {
-  res.render('blog manage panel');
+  if (req.session.logined) {
+    next();
+  }
+  else {
+    res.redirect('/blog');
+  }
+}, function(req, res, next) {
+  res.render('manage', {style: 'manage'});
 });
 
 router.get('/:category', function(req, res, next) {
-  drawMainPage(req, res, next, {'category': category});
+  drawMainPage(req, res, next, {'category': category, style: 'blog'});
 });
 
 router.get('/:category/:date/:subtitle', function(req, res, next) {
@@ -115,7 +122,7 @@ router.get('/:category/:date/:subtitle', function(req, res, next) {
         textWithoutMetadata = tmp[2];
 
         data.page = md.render(textWithoutMetadata);
-        res.render('blog-page', { title: 'HUIT-blog', data: data });
+        res.render('blog-page', { title: 'HUIT-blog', data: data, style: 'blog' });
         client.close();
       });
     });

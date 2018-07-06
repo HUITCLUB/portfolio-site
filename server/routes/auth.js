@@ -3,7 +3,7 @@ const router = express.Router();
 
 const GitHubStrategy = require('passport-github2').Strategy;
 const passport = require('passport');
-const key = require("../credentials")
+const key = require("../credentials");
 
 router.use(passport.initialize());
 router.use(passport.session());
@@ -24,9 +24,9 @@ passport.deserializeUser(function(obj, done) {
 });
 
 passport.use(new GitHubStrategy({
-    clientID: key.val.clientId,
-    clientSecret: key.val.clientSecret,
-    callbackURL: key.val.cburl
+    clientID: process.env.OAUTH_CLIENT_ID,
+    clientSecret: process.env.OAUTH_CLIENT_SECRET,
+    callbackURL: process.env.OAUTH_CALLBACK
   },
   function(accessToken, refreshToken, profile, done) {
     // asynchronous verification, for effect...
@@ -42,7 +42,7 @@ passport.use(new GitHubStrategy({
 ));
 
 router.get('/failed', function(req, res, next) {
-  res.render('auth failed');
+  res.send('auth failed please try again or contact site\'s provider');
 });
 
 router.get('/github', passport.authenticate('github', { scope: [ 'user:email' ] }));
@@ -50,6 +50,7 @@ router.get('/github', passport.authenticate('github', { scope: [ 'user:email' ] 
 router.get('/github/callback',
   passport.authenticate('github', { failureRedirect: '/auth/failed' }),
   function(req, res) {
+    req.session.logined = true;
     res.redirect('/blog/manage');
   }
 );
