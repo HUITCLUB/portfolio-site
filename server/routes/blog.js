@@ -75,16 +75,51 @@ router.get('/', function(req, res, next) {
   drawMainPage(req, res, next, {});
 });
 
-router.get('/manage', function(req, res, next) {
+router.use('/manage', function(req, res, next) {
   if (req.session.logined) {
     next();
   }
   else {
     res.redirect('/blog');
   }
-}, function(req, res, next) {
-  res.render('manage', {style: 'manage'});
 });
+
+router.route('/manage')
+  .get(function(req, res, next) {
+    res.render('manage', {title: 'manage',style: 'manage'});
+  })
+  .post(function(req, res, next) {
+    async.waterfall([
+      function(cb) {
+        MongoClient.connect(url, (err, client) => {
+          assert.equal(null, err);
+          const db = client.db(dbName);
+          cb(null, db, client);
+        });
+      },
+      function(db, client, cb) {
+        // Get the documents collection
+        const collection = db.collection('blog');
+        // Insert some documents
+        collection.insert({
+          category : req.body.category,
+          date : req.body.date,
+          title : req.body.title,
+          path : req.body.date + '-' + req.body.subtitle,
+          subtitle : req.body.subtitle
+        }, function(err, result) {
+          assert.equal(err, null);
+          callback(result);
+        });
+      }],
+      function (err, result) {
+        // result is the list of posts
+        res.render('manage', {title: 'manage',style: 'manage'});
+      }
+    );
+  })
+
+router.post
 
 router.get('/:category', function(req, res, next) {
   drawMainPage(req, res, next, {'category': category, style: 'blog'});
